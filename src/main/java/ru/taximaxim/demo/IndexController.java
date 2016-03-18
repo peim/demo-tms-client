@@ -47,7 +47,7 @@ public class IndexController {
         messParam.put("LOGIN", "petrov_im");
         messParam.put("PASSWORD", "peim125");
         
-        message = (MapMessage)requestor.syncRequest(messParam);
+        /*message = (MapMessage)requestor.syncRequest(messParam);
         
         try {
             System.err.println(message.getString("RESULT"));
@@ -57,7 +57,7 @@ public class IndexController {
             System.err.println(message.getString("MESSAGE"));
         } catch (JMSException e) {
             System.err.println(e);
-        }
+        }*/
         
         return "index";
     }
