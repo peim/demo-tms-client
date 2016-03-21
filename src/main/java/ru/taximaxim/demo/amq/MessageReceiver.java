@@ -1,4 +1,4 @@
-package ru.taximaxim.demo;
+package ru.taximaxim.demo.amq;
 
 import javax.jms.MapMessage;
 import javax.jms.Message;

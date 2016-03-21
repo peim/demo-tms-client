@@ -1,4 +1,4 @@
-package ru.taximaxim.demo;
+package ru.taximaxim.demo.controller;
 
 import javax.jms.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.taximaxim.demo.amq.MessageReceiver;
 import ru.taximaxim.demo.context.SessionContext;
 import ru.taximaxim.demo.protocol.RegisterProtocol;
 import ru.taximaxim.demo.protocol.RegisterResponse;

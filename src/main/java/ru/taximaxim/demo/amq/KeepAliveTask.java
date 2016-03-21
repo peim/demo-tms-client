@@ -1,4 +1,4 @@
-package ru.taximaxim.demo;
+package ru.taximaxim.demo.amq;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import ru.taximaxim.demo.amq.SyncRequestor;
 import ru.taximaxim.demo.context.SessionContext;
 
 @Component
