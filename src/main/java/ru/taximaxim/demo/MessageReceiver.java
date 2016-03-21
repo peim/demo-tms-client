@@ -6,11 +6,11 @@ import javax.jms.MessageListener;
 
 public class MessageReceiver implements MessageListener {
 
-    public void onMessage(final Message message) {
+    public void onMessage(Message message) {
         if (message instanceof MapMessage) {
             final MapMessage mapMessage = (MapMessage) message;
             
-            System.err.println(mapMessage);
+            System.err.println("Пришло: " + mapMessage);
         }
     }
 
