@@ -17,8 +17,6 @@ import org.springframework.jms.core.SessionCallback;
 import org.springframework.jms.support.JmsUtils;
 import org.springframework.stereotype.Service;
 
-import ru.taximaxim.demo.MessageReceiver;
-
 @Service
 public class SyncRequestor {
 
@@ -37,7 +35,6 @@ public class SyncRequestor {
             @Override
             public MapMessage doInJms(Session session) throws JMSException {
                 MessageConsumer consumer = null;
-                //MessageConsumer consumer2 = null;
                 MessageProducer producer = null;
                 try {
                     Destination requestQueue = session.createQueue(PRIMARY_QUEUE_NAME);
@@ -57,16 +54,6 @@ public class SyncRequestor {
                     producer = session.createProducer(requestQueue);
                     producer.send(requestQueue, message);
 
-                    /*MapMessage messs = (MapMessage)consumer.receive(TIMEOUT);
-                    
-                    if (messageParam.get("ACTION").equals("REGISTER")) {
-                        Destination infoQueue = session.createQueue(messs.getString("INFO-QUEUE"));
-                        consumer2 = session.createConsumer(infoQueue);
-                        consumer2.setMessageListener(new MessageReceiver());
-                    }
-                    
-                    return messs;*/
-                    
                     return (MapMessage)consumer.receive(TIMEOUT);
                 }
                 finally {

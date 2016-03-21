@@ -4,18 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jms.ConnectionFactory;
-import javax.jms.Queue;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.taximaxim.demo.amq.SyncRequestor;
-import ru.taximaxim.demo.context.SessionContext;
 
 @RestController
 public class IndexController {
@@ -32,9 +29,6 @@ public class IndexController {
     
     @RequestMapping("/")
     public String getIndex() {
-        //ap map = new HashMap();
-        //map.put("Name", "MYNAME");
-        //messageSender.send(map);
         Map<String, String> messParam = new HashMap<>();
         messParam.put("ACTION", "GETVERSION");
         
@@ -75,8 +69,7 @@ public class IndexController {
             container.setMessageListener(new MessageReceiver());
             container.start();
         }
-        
-        
+
         return "index";
     }
 }
