@@ -11,23 +11,15 @@ import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
-@EnableScheduling
 public class AmqConfiguration {
 
-    @Value("${spring.activemq.user}")
-    private String userName;
-    
-    @Value("${spring.activemq.password}")
-    private String password;
-    
     @Value("${spring.activemq.broker-url}")
     private String brokerURL;
 
     @Bean
     public ActiveMQConnectionFactory amqConnectionFactory() {
         ActiveMQConnectionFactory amqConnectionFactory = 
-                new ActiveMQConnectionFactory("tcp://10.145.251.16:61701");
-               // new ActiveMQConnectionFactory(userName, password, brokerURL);
+                new ActiveMQConnectionFactory(brokerURL);
         return amqConnectionFactory;
     }
 
