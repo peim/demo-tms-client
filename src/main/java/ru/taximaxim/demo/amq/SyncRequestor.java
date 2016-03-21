@@ -6,7 +6,6 @@ import java.util.UUID;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
-import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -29,7 +28,7 @@ public class SyncRequestor {
 
     public SyncRequestor() {}
 
-    public Message syncRequest(Map<String, String> messageParam) {
+    public MapMessage syncRequest(Map<String, String> messageParam) {
         return jmsTemplate.execute(new SessionCallback<MapMessage>() {
 
             @Override

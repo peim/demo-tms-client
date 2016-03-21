@@ -8,7 +8,9 @@ public class SessionContext {
     private String user;
     private String context;
 
-    public SessionContext() {}
+    public SessionContext() {
+        System.err.println("SessionContext - init");
+    }
 
     public SessionContext(String user, String context) {
         this.user = user;
