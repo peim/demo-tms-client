@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
+@EnableScheduling
 public class AmqConfiguration {
 
     @Value("${spring.activemq.user}")

@@ -7,12 +7,14 @@ import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 
+import org.apache.activemq.command.SessionInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.taximaxim.demo.amq.SyncRequestor;
+import ru.taximaxim.demo.context.SessionContext;
 
 @RestController
 public class IndexController {
@@ -26,6 +28,9 @@ public class IndexController {
     
     @Autowired
     private ConnectionFactory connectionFactory;
+    
+    @Autowired
+    private SessionContext sessionContext;
     
     @RequestMapping("/")
     public String getIndex() {
@@ -50,8 +55,10 @@ public class IndexController {
         message = (MapMessage)requestor.syncRequest(messParam);
         
         String queueName = null;
+        String context = null;
         try {
             queueName = message.getString("INFO-QUEUE");
+            context = message.getString("CONTEXT");
             
             System.err.println(message.getString("RESULT"));
             System.err.println(message.getString("CONTEXT"));
@@ -69,6 +76,9 @@ public class IndexController {
             container.setMessageListener(new MessageReceiver());
             container.start();
         }
+        
+        sessionContext.setUser("petrov_im");
+        sessionContext.setContext(context);
 
         return "index";
     }
