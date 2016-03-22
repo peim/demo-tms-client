@@ -10,22 +10,15 @@ import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 
 @Configuration
-public class AmqConfiguration {
+public class ActiveMQConfiguration {
 
-    @Value("${spring.activemq.user}")
-    private String userName;
-    
-    @Value("${spring.activemq.password}")
-    private String password;
-    
     @Value("${spring.activemq.broker-url}")
     private String brokerURL;
 
     @Bean
     public ActiveMQConnectionFactory amqConnectionFactory() {
         ActiveMQConnectionFactory amqConnectionFactory = 
-                new ActiveMQConnectionFactory("tcp://10.145.251.16:61701");
-               // new ActiveMQConnectionFactory(userName, password, brokerURL);
+                new ActiveMQConnectionFactory(brokerURL);
         return amqConnectionFactory;
     }
 
