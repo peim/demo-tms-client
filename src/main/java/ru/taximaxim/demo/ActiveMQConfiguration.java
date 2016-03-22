@@ -8,10 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Configuration
-public class AmqConfiguration {
+public class ActiveMQConfiguration {
 
     @Value("${spring.activemq.broker-url}")
     private String brokerURL;

@@ -28,7 +28,7 @@ public class IndexController {
     @Autowired
     private SessionContext sessionContext;
 
-    @RequestMapping("/")
+   /* @RequestMapping("/")
     public String getIndex() {
 
         if (AmqUtils.checkProtocolVersion(versionProtocol.getVersion())) {
@@ -44,5 +44,5 @@ public class IndexController {
             sessionContext.setContext(response.getContext());
         }
         return "index";
-    }
+    }*/
 }
