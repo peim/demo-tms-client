@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import ru.taximaxim.demo.amq.MessageReceiver;
-import ru.taximaxim.demo.context.SessionContext;
+import ru.taximaxim.demo.context.SessionContextHolder;
 import ru.taximaxim.demo.protocol.RegisterProtocol;
 import ru.taximaxim.demo.protocol.RegisterResponse;
 import ru.taximaxim.demo.protocol.VersionProtocol;
@@ -35,7 +35,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private ConnectionFactory connectionFactory;
 
     @Autowired
-    private SessionContext sessionContext;
+    private SessionContextHolder sessionContextHolder;
 
     @Override
     public Authentication authenticate(Authentication authentication)
@@ -53,13 +53,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 container.setDestinationName(response.getQueue());
                 container.setMessageListener(new MessageReceiver());
                 container.start();
-                // Заполнения контекста
-                sessionContext.setUser(userName);
-                sessionContext.setContext(response.getContext());
+                // Добавляем контекст в хранилище контекстов
+                sessionContextHolder.addContext(response.getContext());
                 // Назначение роли USER для пользователя, прошедшего аутентификацию в Мброкер
                 List<GrantedAuthority> grantedAuths = new ArrayList<GrantedAuthority>();
                 grantedAuths.add(new SimpleGrantedAuthority("ROLE_USER"));
-                return new UsernamePasswordAuthenticationToken(userName, password, grantedAuths);
+                return new CustomAuthenticationToken(userName, password, grantedAuths, response.getContext());
             }
         }
         return null;
