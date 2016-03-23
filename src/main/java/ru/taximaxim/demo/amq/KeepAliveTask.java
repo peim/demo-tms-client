@@ -8,37 +8,40 @@ import javax.jms.MapMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import ru.taximaxim.demo.context.SessionContext;
+import ru.taximaxim.demo.context.SessionContextHolder;
 
-@Component
+@Service
 public class KeepAliveTask {
-
-    @Autowired
-    private SessionContext sessionContext;
 
     @Autowired
     private SyncRequestor requestor;
 
-    public KeepAliveTask() {}
+    @Autowired
+    private SessionContextHolder sessionContextHolder;
     
+    public KeepAliveTask() {}
+
     @Scheduled(fixedRate = 60000)
     public void sendKeepAlive() {
-        System.err.println("KEEPALIVE - " + sessionContext.getContext());
-        MapMessage response = null;
-        if (sessionContext.getContext() != null) {
-            Map<String, String> messageParam = new HashMap<String, String>();
-            messageParam.put("ACTION", "KEEPALIVE");
-            messageParam.put("CONTEXT", sessionContext.getContext());
-            response = (MapMessage)requestor.syncRequest(messageParam);
+        for (String context : sessionContextHolder.getContexts()) {
+            System.err.println("KEEPALIVE - " + context);
             
-            try {
-                if (response.getString("MESSAGE") != null) {
-                    System.err.println("Ошибка: " + response.getString("MESSAGE"));
+            MapMessage response = null;
+            if (context != null) {
+                Map<String, String> messageParam = new HashMap<String, String>();
+                messageParam.put("ACTION", "KEEPALIVE");
+                messageParam.put("CONTEXT", context);
+                response = (MapMessage)requestor.syncRequest(messageParam);
+
+                try {
+                    if (response.getString("MESSAGE") != null) {
+                        System.err.println("Ошибка: " + response.getString("MESSAGE"));
+                    }
+                } catch (JMSException e) {
+                    System.err.println(e);
                 }
-            } catch (JMSException e) {
-                System.err.println(e);
             }
         }
     }
