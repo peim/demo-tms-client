@@ -60,12 +60,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .expiredUrl("/expired")
             .maxSessionsPreventsLogin(true)
             .sessionRegistry(sessionRegistry());
-        
-        /* http.requiresChannel().anyRequest().requiresSecure();
-        
-        http
+
+        http.requiresChannel().anyRequest().requiresSecure();
+
+        /*http
             .portMapper()
-                .http(8080).mapsTo(8443);
-        */
+                .http(8080).mapsTo(8443);*/
+        
     }
 }
